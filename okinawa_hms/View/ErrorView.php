@@ -57,7 +57,7 @@
       </div>
     </div>
 
-    <div class="container" style="margin-top:80px; margin-bottom:220px;">
+    <div class="container" style="margin-top:70px; margin-bottom:220px;">
       <div class="row centered">
         <center>
           <!-- <h1>MySQL Error</h1> -->
