@@ -63,28 +63,27 @@
           <!-- <h1>MySQL Error</h1> -->
           <h1>Database Connection Error</h1>
         </center>
+      </div>
+    </div>
+  </div>
+
+  <div id="footerwrap">
+    <div class="container">
+      <div class="row centered">
+        <div class="col-lg-6 col-lg-offset-3">
+          <p><b>OKINAWA HOTEL MANAGEMENT SYSTEM</b></p>
         </div>
       </div>
     </div>
-
-    <div id="footerwrap">
-      <div class="container">
-        <div class="row centered">
-          <div class="col-lg-6 col-lg-offset-3">
-            <p><b>OKINAWA HOTEL MANAGEMENT SYSTEM</b></p>
-          </div>
-        </div>
-      </div>
-    </div><!--/footerwrap -->
+  </div><!--/footerwrap -->
 
 
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <?php
-  } ?>
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+  <script src="assets/js/bootstrap.min.js"></script>
+  <?php
+} ?>
 </body>
 </html>
