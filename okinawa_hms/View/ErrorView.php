@@ -57,8 +57,8 @@
       </div>
     </div>
 
-    <div class="container" style="margin-top:220px; margin-bottom:220px;">
-      <div class="error-row centered">
+    <div class="container" style="margin-top:80px; margin-bottom:220px;">
+      <div class="row centered">
         <center>
           <!-- <h1>MySQL Error</h1> -->
           <h1>Database Connection Error</h1>
