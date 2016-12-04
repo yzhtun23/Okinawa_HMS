@@ -79,7 +79,7 @@
 
     ?>
     <!-- Static navbar -->
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar navbar-default" role="navigation" style="margin:0; padding:0;">
       <div class="container">
         <div class="navbar-header">
           <button type="button"   class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -148,9 +148,9 @@
                 <div class="form-group">
                   <label for="roomType" class="col-lg-3 control-label">Room Type</label>
                   <div class="col-lg-4">
-                    <select  class="form-control" name="roomTypeSingle" placeholder="Single" >
-                      <option value="">Single Room</option>
-
+                    <label class="control-label">Single</label>
+                    <select  class="form-control" name="roomTypeSingle" placeholder="Single" required style="text-align-last:center;">
+                      <option selected="selected">0</option>
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
@@ -174,8 +174,9 @@
                     </select>
                   </div>
                   <div class="col-lg-4">
-                    <select class="form-control" name="roomTypeDouble" placeholder="Double"  />
-                    <option value="">Double Room</option>
+                    <label class="control-label">Double</label>
+                    <select class="form-control" name="roomTypeDouble" placeholder="Double"  required="true" style="text-align-last:center;"/>
+                    <option selected="selected">0</option>
 
                     <option>1</option>
                     <option>2</option>
@@ -193,15 +194,12 @@
 
               <div class="form-group">
                 <label for="roomStatus" class="col-lg-3 control-label">Room Status</label>
-                <div class="col-lg-8">
-
-                  <h3 style="color:red;">
+                <div class="col-lg-6">
+                  <h4 style="color:red;">
                     <?php  if($_SESSION['check_room']==0){
                       echo  "NOT AVAILABLE" ; }
                       ?>
-                    </h3>
-
-
+                  </h4>
                   </div>
                 </div>
 
