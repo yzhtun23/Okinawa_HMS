@@ -48,7 +48,7 @@
 
     ?>
     <!-- Static navbar -->
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar navbar-default" role="navigation" style="margin:0; padding:0;">
       <div class="container">
         <div class="navbar-header">
           <button type="button"   class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -96,7 +96,7 @@
             elseif($_SESSION['CancelFlag']==4) {
               ?>
               <h2 id="successAlert" style="color:red; margin-bottom: 30px;">
-                <center><strong>Your  Reservation is  Already   Canceled</strong></center>
+                <center><strong>Your Reservation is Already Canceled</strong></center>
               </h2><?php
             }
 
@@ -106,7 +106,7 @@
             elseif($_SESSION['CancelFlag']==2) {
               ?>
               <h2 id="successAlert" style="color:green; margin-bottom: 30px;">
-                <center><strong>Reservation Successfully Updated!!!!</strong></center>
+                <center><strong>Reservation Successfully Updated!</strong></center>
               </h2><?php
             }
             elseif($_SESSION['CancelFlag']==5) {
@@ -173,7 +173,7 @@
                   <div class="form-group">
                     <label for="arrivalDateCR" class="col-md-2 col-md-offset-2 control-label">Arrival Date</label>
                     <div class="col-md-6">
-                      <div class="input-group date" data-provide="datepicker">
+                      <div class="input-group date" data-provide="datepicker" id="arrivalDatepicker">
                         <input type="text" class="form-control" name="arrivaldateupdate" placeholder="<?php  echo $_SESSION['ArrivalDate'] ;?>"  <?php if($_SESSION['CancelFlag']==4 ||  $_SESSION['CancelFlag']==1){?> readonly="readonly" <?php }?>/>
                         <div class="input-group-addon">
                           <span class="glyphicon glyphicon-calendar"></span>
@@ -185,7 +185,7 @@
                   <div class="form-group">
                     <label for="departureDateCR" class="col-md-2 col-md-offset-2 control-label">Departure Date</label>
                     <div class="col-md-6">
-                      <div class="input-group date" data-provide="datepicker">
+                      <div class="input-group date" data-provide="datepicker" id="departureDatepicker">
                         <input type="text" class="form-control" name="departuredateupdate" placeholder="<?php  echo $_SESSION['DeparatureDate'] ;?>"  <?php if($_SESSION['CancelFlag']==4 ||  $_SESSION['CancelFlag']==1){?> readonly="readonly" <?php }?>/>
                         <div class="input-group-addon">
                           <span class="glyphicon glyphicon-calendar "></span>
@@ -197,8 +197,9 @@
                   <div class="form-group">
 
                     <label for="roomType" class="col-md-2 col-md-offset-2 control-label">Room Type</label>
-                    <div class="col-lg-4">
-                      <select  class="form-control"  name="singleroomupdate"  placeholder=""  required <?php if($_SESSION['CancelFlag']==4 ||  $_SESSION['CancelFlag']==1){?>  disabled="true" <?php }?>/>
+                    <div class="col-md-3">
+                      <label class="control-label">Single</label>
+                      <select  class="form-control"  name="singleroomupdate"  placeholder=""  required="true" style="text-align-last:center;" <?php if($_SESSION['CancelFlag']==4 ||  $_SESSION['CancelFlag']==1){?>  disabled="true" <?php }?>/>
                         <option><?php  echo  $_SESSION['Single' ]; ?></option>
                         <option>0</option>
                         <option>1</option>
@@ -224,8 +225,9 @@
                       </select>
                     </div>
 
-                    <div class="col-lg-4">
-                      <select class="form-control" name="doubleroomupdate"  placeholder=""  required="true"  <?php if($_SESSION['CancelFlag']==4 ||  $_SESSION['CancelFlag']==1){?> disabled="true" <?php }?>/>
+                    <div class="col-md-3">
+                      <label class="control-label">Double</label>
+                      <select class="form-control" name="doubleroomupdate"  placeholder=""  required="true" style="text-align-last:center;" <?php if($_SESSION['CancelFlag']==4 ||  $_SESSION['CancelFlag']==1){?> disabled="true" <?php }?>/>
                         <option><?php  echo  $_SESSION['Double' ]; ?></option>
                         <option>0</option>
                         <option>1</option>
@@ -242,24 +244,18 @@
                     </div>
                   </div>
 
+                  <div class="form-group">
+                    <div class="col-md-6 col-md-offset-3" style="margin-top: 30px;">
 
+                      <?php if($_SESSION['CancelFlag']==4 ||  $_SESSION['CancelFlag']==1){?>
 
+                        <input type="submit"   name="CheckButton"  value="BACK" class="btn btn-primary" />
+                        <?php } elseif($_SESSION['CancelFlag']!=4  ||  $_SESSION['CancelFlag']!=1){ ?>
 
-                  <!-- <h4 id="successAlert" style="color:green; margin-top: 30px;">
-                  <center><strong>Rerservation Success</strong></center>
-                </h4> -->
-                <div class="form-group">
-                  <div class="col-md-6 col-md-offset-3" style="margin-top: 30px;">
-
-                    <?php if($_SESSION['CancelFlag']==4 ||  $_SESSION['CancelFlag']==1){?>
-
-                      <input type="submit"   name="CheckButton"  value="BACK" class="btn btn-primary" />
-                      <?php } elseif($_SESSION['CancelFlag']!=4  ||  $_SESSION['CancelFlag']!=1){ ?>
-
-                        <input type="submit"   name="CheckButton"  value="CANCLE" class="btn btn-danger" />
-                        <input  type="submit" class="btn btn-primary" name="CheckButton" value="UPDATE" />
-                        <?php }?>
-
+                          <input type="submit"   name="CheckButton"  value="CANCLE" class="btn btn-danger" />
+                          <input  type="submit" class="btn btn-primary" name="CheckButton" value="UPDATE" />
+                          <?php }?>
+                        </div>
                       </div>
 
                     </fieldset>
@@ -272,7 +268,7 @@
           <div id="social">
             <div class="container">
               <div class="row centered">
-
+                <!-- Blah Blah Blah -->
               </div><!--/row -->
             </div><!--/container -->
           </div><!--/social -->
@@ -286,7 +282,7 @@
               </div>
             </div>
           </div><!--/footerwrap -->
-          
+
           <!-- Bootstrap core JavaScript
           ================================================== -->
           <!-- Placed at the end of the document so the pages load faster -->
