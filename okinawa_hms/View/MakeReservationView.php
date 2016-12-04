@@ -9,15 +9,15 @@
   <link rel="shortcut icon" href="assets/ico/favicon.ico">
 
   <title>Okinawa</title>
-<script type="text/javascript">
-function preventBack(){
-	window.history.forward();
-}
-setTimeout("preventBack()",0);
-window.onunload=function(){null};
-window.history.forward();
+  <script type="text/javascript">
+  function preventBack(){
+    window.history.forward();
+  }
+  setTimeout("preventBack()",0);
+  window.onunload=function(){null};
+  window.history.forward();
 
-</script>
+  </script>
   <!-- Bootstrap core CSS -->
   <link href="assets/css/bootstrap.css" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/bootstrap-datepicker.css"/>
@@ -52,7 +52,7 @@ window.history.forward();
     $reserveID=$_SESSION['rID'];
     ?>
     <!-- Static navbar -->
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar navbar-default" role="navigation" style="margin:0; padding:0;">
       <div class="container">
         <div class="navbar-header">
           <button type="button"   class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -88,15 +88,15 @@ window.history.forward();
     <!-- Check Room Availability -->
     <div class="container">
       <div class="row centered mt mb">
-        <div class="col-md-8 col-md-offset-2" style="margin-top:15px;">
+        <div class="col-lg-8 col-lg-offset-2" style="margin-top:15px;">
           <h2 style="margin-bottom:40px;">RESERVATION FORM </h2>
           <?php  if ($reserveno==4) {?>
-          <h4 style="margin-bottom:20px;"><font color='red'><b>( *) </b>are Require Fields. </font></h4><?php  }?>
-			<?php if ($reserveno!=4){
-            ?><h2 style="color: green;"><?php
-            echo "Reservation Successful<br>";
-            echo "Your Reservation Number  is :{$reserveID}";?></h2><?php
-          } ?>
+            <h4 style="margin-bottom:20px;"><font color='red'><b>( *) </b>are Require Fields. </font></h4><?php  }?>
+            <?php if ($reserveno!=4){
+              ?><h2 style="color: green;"><?php
+              echo "Reservation Successful<br>";
+              echo "Your Reservation Number  is :{$reserveID}";?></h2><?php
+            } ?>
 
             <div class="jumbotron">
               <form class="form-horizontal" name="makeReservation" method="post" action="../Controller/MainController.php">
@@ -119,14 +119,14 @@ window.history.forward();
 
 
                   <div class="form-group">
-                  <label for="Gender" class="col-md-2 col-md-offset-2 control-label"><b><font color='red'>* </font></b>Gender</label>
-                  <div class="col-md-3">
-                    <label class="radio-inline"><input type="radio" name="gender"   value="Male" <?php if($reserveno!=4){ if ($_SESSION['gender']=='Male') {?>checked="true"<?php }} else { ?>checked="true" <?php };?> >Male</label>
+                    <label for="Gender" class="col-md-2 col-md-offset-2 control-label"><b><font color='red'>* </font></b>Gender</label>
+                    <div class="col-md-3">
+                      <label class="radio-inline"><input type="radio" name="gender"   value="Male" <?php if($reserveno!=4){ if ($_SESSION['gender']=='Male') {?>checked="true"<?php }} else { ?>checked="true" <?php };?> >Male</label>
+                    </div>
+                    <div class="col-md-3">
+                      <label class="radio-inline"><input type="radio" name="gender"  value="Female" <?php if($reserveno!=4){  if ($_SESSION['gender']=='Female') {?>checked="true"<?php }}?>>Female</label>
+                    </div>
                   </div>
-                  <div class="col-md-3">
-                    <label class="radio-inline"><input type="radio" name="gender"  value="Female" <?php if($reserveno!=4){  if ($_SESSION['gender']=='Female') {?>checked="true"<?php }}?>>Female</label>
-                  </div>
-                </div>
 
 
                   <div class="form-group">
@@ -140,100 +140,100 @@ window.history.forward();
 
 
                   <?php if($reserveno!=4){?>
-                 	<div class="form-group">
-                    <label for="roomType" class="col-md-2 col-md-offset-2 control-label">Room Type</label>
-                    <div class="col-lg-4">
-                      <select  class="form-control"  name="roomTypeSingle" placeholder="" disabled="disabled"/>
-                      <?php if($reserveno!=4){ ?>
-                       <option value=""><?php echo $_SESSION['roomTypeSingle'] ;?> </option>
-                        <?php } else?>
-                         <option value="">Single Room</option>
-                     <?php for($i=1; $i<=$roomTypesingle; $i++){?>
-                 		<option><?php echo $i; ?></option>
-                        <?php }?>
-                      </select>
-                    </div>
-
-                    <div class="col-lg-4">
-                      <select class="form-control" name="roomTypeDouble"  placeholder="" disabled="disabled"/>
-                     <?php if($reserveno!=4){ ?>
-                       <option value=""><?php echo $_SESSION['roomTypeDouble'] ;?> </option>
-                        <?php } else?>
-                         <option value="">Double Room</option>
-                     <?php for ($j=1; $j<=$roomTypeDouble; $j++){?>
-                     <option><?php echo $j; ?></option>
-                     <?php }?>
-                    </select>
-                  </div>
-                </div>
-					<?php }  ?>
-
-			 <div class="form-group">
-                  <label for="Address" class="col-md-2 col-md-offset-2 control-label"><b><font color='red'>* </font></b>Address</label>
-                  <div class="col-md-6">
-                    <textarea class="form-control" rows="3" id="Address" name="address" placeholder="Address" <?php if($reserveno!=4){?> readonly="readonly" <?php }?>>
-                    <?php  if($reserveno!=4){  echo $_SESSION['address']; }?>
-                    </textarea>
-                  </div>
-                  </div>
-				<input type="hidden" name="arrivalDate" value='<?php echo $arrivaldate  ?>'/>
-                  <input type="hidden" name="departureDate" value='<?php echo $departuredate ?>'/>
-                  	<input type="hidden" name="roomTypeDouble" value='<?php echo $roomTypeDouble  ?>'/>
-                  <input type="hidden" name="roomTypeSingle" value='<?php echo $roomTypesingle  ?>'/>
-
-
-                <!-- <h4 id="successAlert" style="color:green; margin-top: 30px;">
-                <center><strong>Rerservation Success</strong></center>
-              </h4> -->
-              <div class="form-group">
                     <div class="form-group">
-                    <div class="col-md-6 col-md-offset-3" style="margin-top: 30px;">
-                      <?php if($reserveno==4){?><input type="submit" class="btn btn-primary" id="showAlert" name="CheckButton" value="Reserve" ><?php }?>
-                      <?php if($reserveno==4){?>  <input type="reset" class="btn btn-default" name="Back" value="Clear"><?php }?>
-                      <?php if($reserveno!=4){?>  <input type="submit" class="btn btn-primary" id="showAlert"  name="CheckButton" value="BACK"> <?php }?>
+                      <label for="roomType" class="col-md-2 col-md-offset-2 control-label">Room Type</label>
+                      <div class="col-lg-4">
+                        <select  class="form-control"  name="roomTypeSingle" placeholder="" disabled="disabled"/>
+                        <?php if($reserveno!=4){ ?>
+                          <option value=""><?php echo $_SESSION['roomTypeSingle'] ;?> </option>
+                          <?php } else?>
+                          <option value="">Single Room</option>
+                          <?php for($i=1; $i<=$roomTypesingle; $i++){?>
+                            <option><?php echo $i; ?></option>
+                            <?php }?>
+                          </select>
+                        </div>
 
-                    </div>
-                  </div>
-                  </div>
-              </fieldset>
-            </form>
-          </div><!--/jumbotron-->
-        </div>
-      </div><!--/row -->
-    </div><!--/container -->
+                        <div class="col-lg-4">
+                          <select class="form-control" name="roomTypeDouble"  placeholder="" disabled="disabled"/>
+                          <?php if($reserveno!=4){ ?>
+                            <option value=""><?php echo $_SESSION['roomTypeDouble'] ;?> </option>
+                            <?php } else?>
+                            <option value="">Double Room</option>
+                            <?php for ($j=1; $j<=$roomTypeDouble; $j++){?>
+                              <option><?php echo $j; ?></option>
+                              <?php }?>
+                            </select>
+                          </div>
+                        </div>
+                        <?php }  ?>
 
-    <div id="social">
-      <div class="container">
-        <div class="row centered">
-
-        </div><!--/row -->
-      </div><!--/container -->
-    </div><!--/social -->
-
-    <div id="footerwrap">
-      <div class="container">
-        <div class="row centered">
-          <div class="col-lg-6 col-lg-offset-3">
-            <p><b>OKINAWA HOTEL MANAGEMENT SYSTEM</b></p>
-          </div>
-        </div>
-      </div>
-    </div><!--/footerwrap -->
-
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <!--  jQuery -->
-    <script type="text/javascript" src="assets/js/jquery.min.js"></script>
-
-    <script src="assets/js/bootstrap.min.js"></script>
+                        <div class="form-group">
+                          <label for="Address" class="col-md-2 col-md-offset-2 control-label"><b><font color='red'>* </font></b>Address</label>
+                          <div class="col-md-6">
+                            <textarea class="form-control" rows="3" id="Address" name="address" placeholder="Address" <?php if($reserveno!=4){?> readonly="readonly" <?php }?>>
+                              <?php  if($reserveno!=4){  echo $_SESSION['address']; }?>
+                            </textarea>
+                          </div>
+                        </div>
+                        <input type="hidden" name="arrivalDate" value='<?php echo $arrivaldate  ?>'/>
+                        <input type="hidden" name="departureDate" value='<?php echo $departuredate ?>'/>
+                        <input type="hidden" name="roomTypeDouble" value='<?php echo $roomTypeDouble  ?>'/>
+                        <input type="hidden" name="roomTypeSingle" value='<?php echo $roomTypesingle  ?>'/>
 
 
-    <?php
-  }
-  ?>
-</script>
-</body>
-</html>
+                        <!-- <h4 id="successAlert" style="color:green; margin-top: 30px;">
+                        <center><strong>Rerservation Success</strong></center>
+                      </h4> -->
+                      <div class="form-group">
+                        <div class="form-group">
+                          <div class="col-md-6 col-md-offset-3" style="margin-top: 30px;">
+                            <?php if($reserveno==4){?><input type="submit" class="btn btn-primary" id="showAlert" name="CheckButton" value="Reserve" ><?php }?>
+                            <?php if($reserveno==4){?>  <input type="reset" class="btn btn-default" name="Back" value="Clear"><?php }?>
+                            <?php if($reserveno!=4){?>  <input type="submit" class="btn btn-primary" id="showAlert"  name="CheckButton" value="BACK"> <?php }?>
+
+                          </div>
+                        </div>
+                      </div>
+                    </fieldset>
+                  </form>
+                </div><!--/jumbotron-->
+              </div>
+            </div><!--/row -->
+          </div><!--/container -->
+
+          <div id="social">
+            <div class="container">
+              <div class="row centered">
+
+              </div><!--/row -->
+            </div><!--/container -->
+          </div><!--/social -->
+
+          <div id="footerwrap">
+            <div class="container">
+              <div class="row centered">
+                <div class="col-lg-6 col-lg-offset-3">
+                  <p><b>OKINAWA HOTEL MANAGEMENT SYSTEM</b></p>
+                </div>
+              </div>
+            </div>
+          </div><!--/footerwrap -->
+
+
+
+          <!-- Bootstrap core JavaScript
+          ================================================== -->
+          <!-- Placed at the end of the document so the pages load faster -->
+          <!--  jQuery -->
+          <script type="text/javascript" src="assets/js/jquery.min.js"></script>
+
+          <script src="assets/js/bootstrap.min.js"></script>
+
+
+          <?php
+        }
+        ?>
+      </script>
+    </body>
+    </html>
