@@ -10,7 +10,46 @@
   <link rel="shortcut icon" href="assets/ico/favicon.ico">
 
   <title>Okinawa</title>
+  <script type="text/javascript">
 
+  function preventBack(){
+    window.history.forward();
+  }
+  setTimeout("preventBack()",0);
+  window.onunload=function(){null};
+  window.history.forward();
+
+
+  document.onkeydown = checkKeycode
+  function checkKeycode(e) {
+    var keycode;
+    if (window.event)
+    keycode = window.event.keyCode;
+    else if (e)
+    keycode = e.which;
+
+    // Mozilla firefox
+    if ($.browser.mozilla) {
+      if (keycode == 116 ||(e.ctrlKey && keycode == 82)) {
+        if (e.preventDefault)
+        {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }
+    }
+    // IE
+    else if ($.browser.msie) {
+      if (keycode == 116 || (window.event.ctrlKey && keycode == 82)) {
+        window.event.returnValue = false;
+        window.event.keyCode = 0;
+        window.status = "Refresh is disabled";
+      }
+    }
+  }
+
+
+  </script>
   <!-- Bootstrap core CSS -->
   <link href="assets/css/bootstrap.css" rel="stylesheet">
 
@@ -40,7 +79,7 @@
 
     ?>
     <!-- Static navbar -->
-    <div class="navbar navbar-default" role="navigation" style="margin:0; padding:0;">
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button"   class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -109,9 +148,9 @@
                 <div class="form-group">
                   <label for="roomType" class="col-lg-3 control-label">Room Type</label>
                   <div class="col-lg-4">
-                    <label class="control-label">Single</label>
-                    <select  class="form-control" name="roomTypeSingle" placeholder="Single" required style="text-align-last:center;">
-                      <option selected="selected">0</option>
+                    <select  class="form-control" name="roomTypeSingle" placeholder="Single" >
+                      <option value="">Single Room</option>
+
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
@@ -135,9 +174,9 @@
                     </select>
                   </div>
                   <div class="col-lg-4">
-                    <label class="control-label">Double</label>
-                    <select class="form-control" name="roomTypeDouble" placeholder="Double"  required="true" style="text-align-last:center;"/>
-                    <option selected="selected">0</option>
+                    <select class="form-control" name="roomTypeDouble" placeholder="Double"  />
+                    <option value="">Double Room</option>
+
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -154,12 +193,15 @@
 
               <div class="form-group">
                 <label for="roomStatus" class="col-lg-3 control-label">Room Status</label>
-                <div class="col-lg-6">
-                  <h4 style="color:red;">
+                <div class="col-lg-8">
+
+                  <h3 style="color:red;">
                     <?php  if($_SESSION['check_room']==0){
                       echo  "NOT AVAILABLE" ; }
                       ?>
-                    </h4>
+                    </h3>
+
+
                   </div>
                 </div>
 
@@ -182,11 +224,11 @@
     <div class="container">
       <div class="row centered mt mb">
         <div class="col-lg-8 col-lg-offset-2" style="margin-top:15px;">
-          <h2 style="margin-bottom:40px;">CHECK RESERVATION</h2>
+          <h2 style="margin-bottom:40px;">CHECK RESERVATION INFO</h2>
           <div class="jumbotron">
             <form class="form-horizontal" name="checkReserve" method="post" action="../Controller/MainController.php" >
               <fieldset>
-                <legend>Check Your Reservation</legend>
+                <legend>Check Your Reservation Info</legend>
                 <?php    if ($_SESSION['WrongReserve']==1){?>
                   <h4 id="successAlert" style="color:red; margin-bottom: 30px;">
                     <center><strong>Reservation Number and Email  does not match  !!Please Enter Again!!</strong></center>
@@ -205,13 +247,13 @@
                   <div class="form-group">
                     <label for="EmailCR" class="col-lg-3 control-label" >Email</label>
                     <div class="col-lg-8">
-                      <input type="text" class="form-control" id="EamilCR" placeholder="Email(example@gmail.com)" name='Email'   	pattern="(\W|^)[\w.+\-]{0,25}@(yahoo|hotmail|gmail)\.com(\W|$)"	required />
+                      <input type="text" class="form-control" id="EamilCR" placeholder="Email(example@gmail.com)" name='Email'   	pattern="^[a-z]+(\d*[-+.']*[a-z]*\d*)*@(yahoo|hotmail|gmail|zoho|yandex|protonmail|aol|aim|outlook|icloud|gmax)\.com"	required />
                     </div>
                   </div>
 
                   <div class="form-group">
                     <div class="col-lg-12">
-                      <input type="submit"   name="CheckButton"  value="CHECK2" class="btn btn-success btn-lg" >
+                      <input type="submit"   name="CheckButton"  value="CHECK" class="btn btn-success btn-lg" >
                     </div>
                   </div>
                 </fieldset>

@@ -9,7 +9,15 @@
   <link rel="shortcut icon" href="assets/ico/favicon.ico">
 
   <title>Okinawa</title>
+  <script type="text/javascript">
+  function preventBack(){
+    window.history.forward();
+  }
+  setTimeout("preventBack()",0);
+  window.onunload=function(){null};
+  window.history.forward();
 
+  </script>
   <!-- Bootstrap core CSS -->
   <link href="assets/css/bootstrap.css" rel="stylesheet">
 
@@ -44,13 +52,13 @@
       ],
       //on-hover tooltip
       eventRender: function(event, element) {
-        if(event.color=="#E10000") {
+        if(event.color=="red") {
           $(element).tooltip({title: "No Room Available"});
         }
-        else if(event.color=="#F3E400") {
+        else if(event.color=="yellow") {
           $(element).tooltip({title: "Less than 10 Rooms are Available"});
         }
-        else if(event.color=="#4BEC00") {
+        else if(event.color=="green") {
           $(element).tooltip({title: "More than 10 Rooms are Available"});
         }
       }
@@ -84,7 +92,7 @@
 
     ?>
     <!-- Static navbar -->
-    <div class="navbar navbar-default" role="navigation" style="margin:0; padding:0;">
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -93,7 +101,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="HomeView.php">OKINAWA</a>
+          <a class="navbar-brand" href="index.html">OKINAWA</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
@@ -123,11 +131,6 @@
           <h2>MONTHLY VACANCY STATUS</h2>
           <hr>
           <div id='calendar' style="margin-top:50px;"></div>
-
-          <h4 style="margin-top:50px;margin-bottom:30px;">Description</h4>
-          <img src="assets/img/yellow.png" alt="Yellow Block" height="42" width="42"></img> Less Than 10 Rooms are Available
-          <img src="assets/img/green.png" alt="Green Block" height="42" width="42"></img> More Than 10 Rooms are Available
-          <img src="assets/img/red.png" alt="Red Block" height="42" width="42"></img> No Room Available
         </div>
       </div><!--/row -->
     </div><!--/container -->
@@ -135,7 +138,7 @@
     <div id="social">
       <div class="container">
         <div class="row centered">
-          <!-- Social Icons -->
+
         </div><!--/row -->
       </div><!--/container -->
     </div><!--/social -->
@@ -149,6 +152,8 @@
         </div>
       </div>
     </div><!--/footerwrap -->
+
+
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

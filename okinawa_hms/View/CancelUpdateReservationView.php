@@ -9,7 +9,15 @@
   <link rel="shortcut icon" href="assets/ico/favicon.ico">
 
   <title>Okinawa</title>
+  <script type="text/javascript">
+  function preventBack(){
+    window.history.forward();
+  }
+  setTimeout("preventBack()",0);
+  window.onunload=function(){null};
+  window.history.forward();
 
+  </script>
   <!-- Bootstrap core CSS -->
   <link href="assets/css/bootstrap.css" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/bootstrap-datepicker.css"/>
@@ -40,7 +48,7 @@
 
     ?>
     <!-- Static navbar -->
-    <div class="navbar navbar-default" role="navigation" style="margin:0; padding:0;">
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button"   class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -85,12 +93,15 @@
             </h2>
             <?php }
 
-            elseif($_SESSION['CancelFlag']==0) {
+            elseif($_SESSION['CancelFlag']==4) {
               ?>
               <h2 id="successAlert" style="color:red; margin-bottom: 30px;">
-                <center><strong>This Reservation is  Already   Canceled</strong></center>
+                <center><strong>Your  Reservation is  Already   Canceled</strong></center>
               </h2><?php
             }
+
+
+
 
             elseif($_SESSION['CancelFlag']==2) {
               ?>
@@ -101,7 +112,7 @@
             elseif($_SESSION['CancelFlag']==5) {
               ?>
               <h2 id="successAlert" style="color:red; margin-bottom: 30px;">
-                <center><strong>Sorry . Your Edited room is Not Available</strong></center>
+                <center><strong>Sorry . Your Edited Room Is Not Available</strong></center>
               </h2><?php
             }
 
@@ -119,16 +130,28 @@
                   <div class="form-group">
                     <label for="ReserveNoCR" class="col-md-2 col-md-offset-2 control-label">Reserve No.</label>
                     <div class="col-md-6">
-                      <input type="text" class="form-control" id="ReserveNoCR" placeholder="<?php echo $_SESSION['Reserveno'];?>" disabled="true">
+                      <input type="text" class="form-control" id="ReserveNoCR" placeholder="<?php echo $_SESSION['RID'];?>" disabled="true">
                     </div>
                   </div>
+
+
 
                   <div class="form-group">
                     <label for="NameCR" class="col-md-2 col-md-offset-2 control-label">Name</label>
                     <div class="col-md-6">
-                      <input type="text" class="form-control" id="NameCR"  name="nameupdate" placeholder="<?php  echo $_SESSION['name']; ?>"  >
+                      <input type="text" class="form-control" id="NameCR"  name="nameupdate" placeholder="<?php  echo $_SESSION['name']; ?>" <?php if($_SESSION['CancelFlag']==4 ||  $_SESSION['CancelFlag']==1){?>  disabled="true" <?php }?>/>
                     </div>
                   </div>
+
+
+                  <div class="form-group">
+                    <label for="NameCR" class="col-md-2 col-md-offset-2 control-label">Email</label>
+                    <div class="col-md-6">
+                      <input type="text" class="form-control" id="NameCR"  name="emailupdate" placeholder="<?php  echo $_SESSION['email']; ?>" <?php if($_SESSION['CancelFlag']==4 ||  $_SESSION['CancelFlag']==1){?>  disabled="true" <?php }?>/>
+                    </div>
+                  </div>
+
+
 
                   <div class="form-group">
                     <label for="Gender" class="col-md-2 col-md-offset-2 control-label">Gender</label>
@@ -143,15 +166,15 @@
                   <div class="form-group">
                     <label for="phNo" class="col-md-2 col-md-offset-2 control-label">Phone No.</label>
                     <div class="col-md-6">
-                      <input type="text" class="form-control" id="phNo" name="phonenoupdate"  placeholder="<?php  echo $_SESSION['phone'] ;?>" >
+                      <input type="text" class="form-control" id="phNo" name="phonenoupdate"  placeholder="<?php  echo $_SESSION['phone'] ;?>"  <?php if($_SESSION['CancelFlag']==4 ||  $_SESSION['CancelFlag']==1){?>  disabled="true" <?php }?>/>
                     </div>
                   </div>
 
                   <div class="form-group">
                     <label for="arrivalDateCR" class="col-md-2 col-md-offset-2 control-label">Arrival Date</label>
                     <div class="col-md-6">
-                      <div class="input-group date" data-provide="datepicker" id="arrivalDatepicker">
-                        <input type="text" class="form-control" name="arrivaldateupdate" placeholder="<?php  echo $_SESSION['ArrivalDate'] ;?>"  >
+                      <div class="input-group date" data-provide="datepicker">
+                        <input type="text" class="form-control" name="arrivaldateupdate" placeholder="<?php  echo $_SESSION['ArrivalDate'] ;?>"  <?php if($_SESSION['CancelFlag']==4 ||  $_SESSION['CancelFlag']==1){?> readonly="readonly" <?php }?>/>
                         <div class="input-group-addon">
                           <span class="glyphicon glyphicon-calendar"></span>
                         </div>
@@ -162,20 +185,20 @@
                   <div class="form-group">
                     <label for="departureDateCR" class="col-md-2 col-md-offset-2 control-label">Departure Date</label>
                     <div class="col-md-6">
-                      <div class="input-group date" data-provide="datepicker" id="departureDatepicker">
-                        <input type="text" class="form-control" name="departuredateupdate" placeholder="<?php  echo $_SESSION['DeparatureDate'] ;?>" >
+                      <div class="input-group date" data-provide="datepicker">
+                        <input type="text" class="form-control" name="departuredateupdate" placeholder="<?php  echo $_SESSION['DeparatureDate'] ;?>"  <?php if($_SESSION['CancelFlag']==4 ||  $_SESSION['CancelFlag']==1){?> readonly="readonly" <?php }?>/>
                         <div class="input-group-addon">
                           <span class="glyphicon glyphicon-calendar "></span>
                         </div>
                       </div>
                     </div>
                   </div>
+
                   <div class="form-group">
 
                     <label for="roomType" class="col-md-2 col-md-offset-2 control-label">Room Type</label>
-                    <div class="col-md-3">
-                      <label class="control-label">Single</label>
-                      <select  class="form-control"  name="singleroomupdate"  placeholder=""  required style="text-align-last:center;">
+                    <div class="col-lg-4">
+                      <select  class="form-control"  name="singleroomupdate"  placeholder=""  required <?php if($_SESSION['CancelFlag']==4 ||  $_SESSION['CancelFlag']==1){?>  disabled="true" <?php }?>/>
                         <option><?php  echo  $_SESSION['Single' ]; ?></option>
                         <option>0</option>
                         <option>1</option>
@@ -201,97 +224,81 @@
                       </select>
                     </div>
 
-                    <div class="col-md-3">
-                      <label class="control-label">Double</label>
-                      <select class="form-control" name="doubleroomupdate"  placeholder="" required="true" style="text-align-last:center;" />
-                      <option>   <?php  echo  $_SESSION['Double' ]; ?></option>
-                      <option>0</option>
-                      <option>1</option>
-                      <option>2</option>
-                      <option>3</option>
-                      <option>4</option>
-                      <option>5</option>
-                      <option>6</option>
-                      <option>7</option>
-                      <option>8</option>
-                      <option>9</option>
-                      <option>10</option>
-                    </select>
+                    <div class="col-lg-4">
+                      <select class="form-control" name="doubleroomupdate"  placeholder=""  required="true"  <?php if($_SESSION['CancelFlag']==4 ||  $_SESSION['CancelFlag']==1){?> disabled="true" <?php }?>/>
+                        <option><?php  echo  $_SESSION['Double' ]; ?></option>
+                        <option>0</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                      </select>
+                    </div>
                   </div>
+
+
+
+
+                  <!-- <h4 id="successAlert" style="color:green; margin-top: 30px;">
+                  <center><strong>Rerservation Success</strong></center>
+                </h4> -->
+                <div class="form-group">
+                  <div class="col-md-6 col-md-offset-3" style="margin-top: 30px;">
+
+                    <?php if($_SESSION['CancelFlag']==4 ||  $_SESSION['CancelFlag']==1){?>
+
+                      <input type="submit"   name="CheckButton"  value="BACK" class="btn btn-primary" />
+                      <?php } elseif($_SESSION['CancelFlag']!=4  ||  $_SESSION['CancelFlag']!=1){ ?>
+
+                        <input type="submit"   name="CheckButton"  value="CANCLE" class="btn btn-danger" />
+                        <input  type="submit" class="btn btn-primary" name="CheckButton" value="UPDATE" />
+                        <?php }?>
+
+                      </div>
+
+                    </fieldset>
+                  </form>
+                </div><!--/jumbotron-->
+              </div>
+            </div><!--/row -->
+          </div><!--/container -->
+
+          <div id="social">
+            <div class="container">
+              <div class="row centered">
+
+              </div><!--/row -->
+            </div><!--/container -->
+          </div><!--/social -->
+
+          <div id="footerwrap">
+            <div class="container">
+              <div class="row centered">
+                <div class="col-lg-6 col-lg-offset-3">
+                  <p><b>OKINAWA HOTEL MANAGEMENT SYSTEM</b></p>
                 </div>
+              </div>
+            </div>
+          </div><!--/footerwrap -->
+          
+          <!-- Bootstrap core JavaScript
+          ================================================== -->
+          <!-- Placed at the end of the document so the pages load faster -->
+          <!--  jQuery -->
+          <script type="text/javascript" src="assets/js/jquery.min.js"></script>
+
+          <script src="assets/js/bootstrap.min.js"></script>
 
 
-
-
-                <!-- <h4 id="successAlert" style="color:green; margin-top: 30px;">
-                <center><strong>Rerservation Success</strong></center>
-              </h4> -->
-              <div class="form-group">
-                <div class="col-md-6 col-md-offset-3" style="margin-top: 30px;">
-
-                  <input type="submit"   name="CheckButton"  value="CANCLE" class="btn btn-danger" /  >
-                  <input  type="submit" class="btn btn-primary" name="CheckButton" value="UPDATE" />
-                </div>
-
-              </fieldset>
-            </form>
-          </div><!--/jumbotron-->
-        </div>
-      </div><!--/row -->
-    </div><!--/container -->
-
-    <div id="social">
-      <div class="container">
-        <div class="row centered">
-
-        </div><!--/row -->
-      </div><!--/container -->
-    </div><!--/social -->
-
-    <div id="footerwrap">
-      <div class="container">
-        <div class="row centered">
-          <div class="col-lg-6 col-lg-offset-3">
-            <p><b>OKINAWA HOTEL MANAGEMENT SYSTEM</b></p>
-          </div>
-        </div>
-      </div>
-    </div><!--/footerwrap -->
-
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <!--  jQuery -->
-    <script type="text/javascript" src="assets/js/jquery.min.js"></script>
-    <script type="text/javascript" src="assets/js/moment.min.js"></script>
-
-    <script src="assets/js/bootstrap.min.js"></script>
-
-    <!-- Bootstrap Date-Picker Plugin -->
-    <script type="text/javascript" src="assets/js/bootstrap-datepicker.min.js"></script>
-
-    <script type="text/javascript">
-    $(document).ready(function () {
-      var date = new Date();
-      date.setDate(date.getDate()-1);
-      $('#arrivalDatepicker').datepicker({
-        format: "yyyy-mm-dd",
-        startDate: date
-      });
-
-    });
-    $(document).ready(function () {
-      var date = new Date();
-      date.setDate(date.getDate()-1);
-      $('#departureDatepicker').datepicker({
-        format: "yyyy-mm-dd",
-        startDate: date
-      });
-
-    });
-    </script>
-    <?php }?>
-  </body>
-  </html>
+          <?php
+        }
+        ?>
+      </script>
+    </body>
+    </html>
