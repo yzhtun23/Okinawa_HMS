@@ -150,7 +150,7 @@
                   <div class="col-lg-4">
                     <label class="control-label">Single</label>
                     <select  class="form-control" name="roomTypeSingle" placeholder="Single" required style="text-align-last:center;">
-                      <option selected="selected">0</option>
+                      <option selected="selected"></option>
                       <option>1</option>
                       <option>2</option>
                       <option>3</option>
@@ -176,8 +176,7 @@
                   <div class="col-lg-4">
                     <label class="control-label">Double</label>
                     <select class="form-control" name="roomTypeDouble" placeholder="Double"  required="true" style="text-align-last:center;"/>
-                    <option selected="selected">0</option>
-
+                    <option selected="selected"></option>
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
