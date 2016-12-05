@@ -1,8 +1,8 @@
 <?php
 
 class CustomerDAO{
-public function reservationInfo($name,$email,$gender,$phoneno,$address,$arrivaldate,$departuredate,$singleno,$doubleno){
-$arryear=substr($arrivaldate, 2,2);
+public function reservationInfo($name,$email,$gender,$phoneno,$address,$arrivaldate,$departuredate,$singleno,$doubleno){		
+		$arryear=substr($arrivaldate, 2,2);
 		$depyear=substr($departuredate, 2,2);
 		$arrmonth=substr($arrivaldate,5, 2);
 		$depmonth=substr($departuredate,5, 2);
@@ -101,7 +101,10 @@ $arryear=substr($arrivaldate, 2,2);
 		catch ( PDOException $e ) {
 
 			echo "Connection failed: " . $e->getMessage();
+			header('location:../View/Error.php');
 		}
+		
+	
 		try{
 			$maxsql='SELECT MAX(ReserveID) from reservation';
 			$maxrow=$conn->query($maxsql)->fetchColumn();
@@ -166,23 +169,27 @@ $arryear=substr($arrivaldate, 2,2);
 		}
 		catch (PDOException $e){
 			echo "Query failed: " . $e->getMessage();
+			header('location:../View/Error.php');
 		}
 
-		$conn = null;
+		
 		$_SESSION['reseveID']=$reseveno;
-		return 1;
+		$conn = null;
+			return 1;
+}
+	
 
-	}
-
-public function UpdateCustomer(){
-
+public function UpdateCustomer($Reserveno){	
 		$dsn = "mysql:dbname=fujitsu";
 		$username = "root";
 		$password = "";
-		$Reserveno=$_SESSION['Reserveno'];
+		
 		$name=$_SESSION['nameupdate'];
 		$gender=$_SESSION['optradioupdate'];
 		$phoneno=$_SESSION['phonenoupdate'];
+		$email=$_SESSION['emailupdate'];
+		$singleupdate=$_SESSION['singleroomupdate'];
+		$doubleupdate=$_SESSION['doubleroomupdate'];
 
 		try {
 			$conn = new PDO( $dsn, $username, $password );
@@ -192,8 +199,9 @@ public function UpdateCustomer(){
 		catch ( PDOException $e ) {
 
 			echo "Connection failed: " . $e->getMessage();
+			header('location:../View/Error.php');
 		}
-		$updatecustomersql="UPDATE CUSTOMER SET CustName='".$name."' , Gender='".$gender."' ,CustPhone='".$phoneno."'where ReserveID='". $Reserveno."'";
+		$updatecustomersql="UPDATE CUSTOMER SET CustName='".$name."' , CustEmail='".$email."' ,Gender='".$gender."' ,CustPhone='".$phoneno."',Single_No_of_room='.$singleupdate.',Double_No_of_room='.$doubleupdate.' where ReserveID='". $Reserveno."'";
 try {
 
    			$R = $conn->query( $updatecustomersql);
@@ -206,11 +214,46 @@ try {
 
 		catch (PDOException $e){
 			echo "Query failed: " . $e->getMessage();
+			header('location:../View/Error.php');
 		}
 
 		$conn = null;
 
 	}
+	public function updatereservation($email,$arrivaldate,$deparaturedate){
+		$id=null;
+	$dsn="mysql:dbname=fujitsu";
+		$username = "root";
+		$password = "";
+		try {
+			$conn = new PDO( $dsn, $username, $password );
+			$conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
+
+		}
+		catch ( PDOException $e ) {
+
+			echo "Connection failed: " . $e->getMessage();
+			header('location:../View/Error.php');
+		}
+		$custsql='SELECT ReserveID from customer where CustEmail="'.$email.'" and ReserveID IN(SELECT ReserveID from reservation where ArrivalDate="'.$arrivaldate.'"
+				 and DeparatureDate="'.$deparaturedate.'")';
+		$result1=$conn->query($custsql);
+		foreach ($result1 as $r){
+			$id=$r['ReserveID'];
+				
+		}
+		
+		if(isset($id)){
+			$_SESSION['rid']=$id;
+		$_SESSION['custemail']=$email;
+			echo "notnull<br>";
+			return 2;
+		}
+		
+		else return 1;
+		
+	}
 
 }
 ?>
+ 

@@ -1,13 +1,12 @@
 <?php
 
 class ReservationDAO  {
-	public function CheckReserve() {
+	public function CheckReserve($Reserveno,$Email) {
 
 		$dsn = "mysql:dbname=fujitsu";
 		$username = "root";
 		$password = "";
-		$Reserveno=$_SESSION['Reserveno'];
-		$Email=$_SESSION['Email'];
+	
 		try {
 			$conn = new PDO( $dsn, $username, $password );
 			$conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
@@ -15,12 +14,32 @@ class ReservationDAO  {
 		catch ( PDOException $e ) {
 
 			echo "Connection failed: " . $e->getMessage();
+			header('location:../View/Error.php');
 		}
 
 		$sql = 'SELECT  custID  from Customer  where ReserveID='.$Reserveno.' and  custEmail="'.$Email.'"';
 		$sql1 ="SELECT  custName,custAddress,custPhone,gender,Single_No_of_room,Double_No_of_room   from  Customer  where ReserveID='". $Reserveno."'";
 		$sql2="SELECT  ArrivalDate,DeparatureDate  from Reservation where ReserveID='". $Reserveno."'";
 		try {
+			
+			
+		$AlreadyCancelsql ="SELECT  ReserveStatus     from  Reservation  where  ReserveID='". $Reserveno."'";
+		
+			$AlreadyCancel = $conn->query( $AlreadyCancelsql );
+
+			foreach ($AlreadyCancel  as $AlreadyCancelkey) {
+				$status = $AlreadyCancelkey['ReserveStatus'];
+
+			}
+
+			if (isset($status) && $status==0){
+
+				
+				$_SESSION['CancelFlag']=4;
+				
+			}
+			
+			
 			$results = $conn->query( $sql );
 			$results1=$conn->query($sql1);
 			$results2=$conn->query($sql2);
@@ -39,6 +58,9 @@ class ReservationDAO  {
 				$DeparatureDate=$key2['DeparatureDate'];
 
 			}
+			
+				
+			
 
 			foreach ($results as $key) {
 				$id = $key['custID'];
@@ -49,6 +71,8 @@ class ReservationDAO  {
 
 
 				$_SESSION['name']=$name;
+				$_SESSION['email']=$Email;
+				$_SESSION['RID']=$Reserveno;
 				$_SESSION['phone']=$phone;
 				$_SESSION['gender']=$gender;
 				$_SESSION['ArrivalDate']=$ArrivalDate;
@@ -90,6 +114,7 @@ class ReservationDAO  {
 		catch ( PDOException $e ) {
 
 			echo "Connection failed: " . $e->getMessage();
+			header('location:../View/Error.php');
 		}
 
 		$Cancelsql ="SELECT  ReserveStatus     from  Reservation  where  ReserveID='". $Reserveno."'";
@@ -110,13 +135,14 @@ class ReservationDAO  {
 				return $_SESSION['Flag']=1;
 			}
 			else  {
-				$_SESSION['CancelFlag']=0;
+				
 				return $_SESSION['Flag']=1;
 			}
 		}
 
 		catch (PDOException $e){
 			echo "Query failed: " . $e->getMessage();
+			header('location:../View/Error.php');
 		}
 
 		$conn = null;
@@ -138,13 +164,14 @@ class ReservationDAO  {
 		catch ( PDOException $e ) {
 
 			echo "Connection failed: " . $e->getMessage();
+			header('location:../View/Error.php');
 		}
 
 		try {
-			$sql1=' SELECT  count(RoomID) from Room where RoomDate=" '.$arrivaldate.' " and RoomType="Single" and Status=1';
+			$sql1=' SELECT  count(RoomID) from Room where RoomDate between " '.$arrivaldate.' " and "'.$departuredate.'" and RoomType="Single" and Status=1';
 			$rows1 = $conn->query( $sql1 )->fetchColumn();
 
-			$sql2=' SELECT  count(RoomID) from Room where RoomDate=" '.$arrivaldate.' " and RoomType="Double" and Status=1';
+			$sql2=' SELECT  count(RoomID) from Room where RoomDate=" '.$arrivaldate.' " and "'.$departuredate.'" and RoomType="Double" and Status=1';
 			echo "<ul>";
 			$rows2 = $conn->query($sql2)->fetchColumn();
 			$single=20-$rows1;
@@ -160,17 +187,16 @@ class ReservationDAO  {
 		}
 		catch (PDOException $e){
 			echo "Query failed: " . $e->getMessage();
+			header('location:../View/Error.php');
 		}
 	}
+	
 
 
 
-	public function updatereserve(){
-		$Reserveno=$_SESSION['Reserveno'];
-		$singleno=	$_SESSION['singleroomupdate'];
-		$doubleno=$_SESSION['doubleroomupdate'];
-		$arrivaldate= $_SESSION['arrivaldateupdate'];
-		$deparaturedate=$_SESSION['departuredateupdate'];
+	public function updatereserve($Reserveno,$singleno,$doubleno,$arrivaldate,$deparaturedate){
+		echo $Reserveno,$singleno,$doubleno,$arrivaldate,$deparaturedate;
+		
 
 
 		$checkroomflag=null;
@@ -186,6 +212,7 @@ class ReservationDAO  {
 		catch ( PDOException $e ) {
 
 			echo "Connection failed: " . $e->getMessage();
+			header('location:../View/Error.php');
 		}
 
 		try {
@@ -206,17 +233,14 @@ class ReservationDAO  {
 
 			}
 
-
-			$updatesql2=' SELECT  count(RoomID) from Room where RoomDate=" '.$arrivaldate.' " and RoomType="Single" and Status=1';
+           $updatesql2=' SELECT  count(RoomID) from Room where RoomDate between " '.$arrivaldate.' " and "'.$deparaturedate.'" and RoomType="Single" and Status=1';
 			$rows1 = $conn->query( $updatesql2 )->fetchColumn();
 
-			$updatesql3=' SELECT  count(RoomID) from Room where RoomDate=" '.$arrivaldate.' " and RoomType="Double" and Status=1';
+			$updatesql3=' SELECT  count(RoomID) from Room where RoomDate=" '.$arrivaldate.' " and "'.$deparaturedate.'" and RoomType="Double" and Status=1';
+			echo "<ul>";
 			$rows2 = $conn->query($updatesql3)->fetchColumn();
-
 			$single=20-$rows1;
 			$double=10-$rows2;
-			echo $single;
-			echo $double;
 
 			if ($single >= $singleno &&  $double>=$doubleno){
 				echo "Avaliable";
@@ -384,6 +408,7 @@ class ReservationDAO  {
 		}
 		catch (PDOException $e){
 			echo "Query failed: " . $e->getMessage();
+			header('location:../View/Error.php');
 		}
 
 	}

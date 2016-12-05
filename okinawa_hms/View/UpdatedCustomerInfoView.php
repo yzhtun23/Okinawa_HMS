@@ -48,7 +48,7 @@
 
     ?>
     <!-- Static navbar -->
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar navbar-default" role="navigation" style="margin:0; padding:0;">
       <div class="container">
         <div class="navbar-header">
           <button type="button"   class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -192,22 +192,15 @@
         </div>
       </div><!--/footerwrap -->
 
-
-
       <!-- Bootstrap core JavaScript
       ================================================== -->
       <!-- Placed at the end of the document so the pages load faster -->
       <!--  jQuery -->
       <script type="text/javascript" src="assets/js/jquery.min.js"></script>
-
       <script src="assets/js/bootstrap.min.js"></script>
 
-
       <?php
-
     }
-
-
     ?>
   </script>
 </body>

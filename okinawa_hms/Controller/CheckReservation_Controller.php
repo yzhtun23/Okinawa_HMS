@@ -5,10 +5,10 @@ class CheckReservation_Controller{
     include  ('../Model/dao/ReservationDAO.php');
 
     $RDAO = new ReservationDAO();
-    $Reserve_list = $RDAO->CheckReserve();
+    $Reserveno=$_SESSION['Reserveno'];
+	$Email=$_SESSION['Email'];
+    $Reserve_list = $RDAO->CheckReserve($Reserveno,$Email);
     $_SESSION['WrongReserve']=$Reserve_list;
-
-
   }
 
 }
